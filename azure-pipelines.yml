@@ -7,13 +7,20 @@ trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: default
 
 steps:
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
     mavenOptions: '-Xmx3072m'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
 - task: Maven@4
   inputs:
     javaHomeOption: 'JDKVersion'
